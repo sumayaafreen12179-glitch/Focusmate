@@ -1,0 +1,23 @@
+:root {
+    /* Color Palette: "Deep Focus" */
+    --bg-primary: #121212;   /* Very dark grey, easier on eyes than pure black */
+    --bg-secondary: #1E1E1E; /* Card background */
+    --text-primary: #E0E0E0; /* High legibility */
+    --text-muted: #A0A0A0;
+    --accent-focus: #4CAF50; /* Green for focus */
+    --accent-break: #FF9800; /* Orange for break */
+    --accent-stress: #F44336; /* Red for high stress */
+    --radius: 12px;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
