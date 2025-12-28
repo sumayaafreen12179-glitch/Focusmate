@@ -3,13 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FocusMate</title>
+    <title>FocusMate Pro</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div style="text-align: center;">
-        <h1>FocusMate</h1>
-        <p style="color: var(--accent-focus);">Status: System Operational</p>
+    <div class="app-container">
+        
+        <header class="app-header">
+            <h1>FocusMate</h1>
+            <p id="status-text">Ready to enter flow state</p>
+        </header>
+
+        <main class="timer-card" id="timer-card">
+            <div class="streak-badge">🔥 Streak: <span id="streak-count">0</span> Days</div>
+            
+            <div class="time-display" id="time-display">25:00</div>
+
+            <div class="controls">
+                <button id="btn-start" class="btn btn-primary">Start Focus</button>
+                <button id="btn-pause" class="btn btn-secondary" disabled>Pause</button>
+                <button id="btn-reset" class="btn btn-outline">Reset</button>
+            </div>
+
+            <div id="mood-selector" style="display: none; margin-top: 20px;">
+                <p>How was your session?</p>
+                <div style="display: flex; gap:10px; justify-content:center;">
+                    <button class="btn btn-secondary btn-mood" data-mood="Focused">🔥 Focused</button>
+                    <button class="btn btn-secondary btn-mood" data-mood="Bored">✅ Bored</button>
+                    <button class="btn btn-secondary btn-mood" data-mood="Anxious">😓 Anxious</button>
+                </div>
+            </div>
+
+            <div class="mode-selector-container">
+                <button class="mode-btn active" data-time="25">Focus</button>
+                <button class="mode-btn" data-time="5">Break</button>
+            </div>
+        </main>
+
+        <section class="analytics-card">
+            <h3 style="margin:0;">Performance Data</h3>
+            
+            <div style="height: 150px; width: 100%;">
+                <canvas id="focusChart"></canvas>
+            </div>
+
+            <div style="height: 150px; width: 100%; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px; margin-top: 15px;">
+                <h4 style="margin:0 0 10px 0; font-size:0.9rem; color:#888;">Mood Distribution</h4>
+                <canvas id="moodChart"></canvas>
+            </div>
+        </section>
+
+        <section class="calendar-card">
+            <div class="calendar-header">
+                <h3 id="currentMonth">December 2025</h3>
+            </div>
+            <div class="calendar-grid" id="calendarGrid"></div>
+        </section>
+
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}?v=3"></script>
 </body>
 </html>

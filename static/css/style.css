@@ -1,23 +1,190 @@
 :root {
-    /* Color Palette: "Deep Focus" */
-    --bg-primary: #121212;   /* Very dark grey, easier on eyes than pure black */
-    --bg-secondary: #1E1E1E; /* Card background */
-    --text-primary: #E0E0E0; /* High legibility */
-    --text-muted: #A0A0A0;
-    --accent-focus: #4CAF50; /* Green for focus */
-    --accent-break: #FF9800; /* Orange for break */
-    --accent-stress: #F44336; /* Red for high stress */
-    --radius: 12px;
-    --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    --bg-dark: #0f0c29;
+    --bg-gradient: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --neon-green: #00f260;
+    --neon-blue: #0575E6;
+    --text-main: #ffffff;
+    --text-muted: #b3b3b3;
 }
 
 body {
     margin: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: var(--bg-primary);
-    color: var(--text-primary);
+    font-family: 'Inter', sans-serif;
+    background: var(--bg-gradient);
+    color: var(--text-main);
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* LAYOUT */
+.app-container {
+    width: 100%;
+    max-width: 900px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto auto; 
+    gap: 20px;
+}
+.app-header { grid-column: 1 / -1; text-align: center; margin-bottom: 10px; }
+.app-header h1 { margin: 0; font-size: 2.5rem; font-weight: 800; }
+.app-header p { margin: 5px 0 0; color: var(--text-muted); }
+
+/* CARDS */
+.timer-card, .analytics-card, .calendar-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    padding: 2rem;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+.timer-card { 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center; 
+    min-height: 400px; 
+}
+.analytics-card { 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: space-between; 
+    min-height: 400px; 
+}
+.calendar-card { 
+    grid-column: 1 / -1; 
+}
+
+/* ELEMENTS */
+.time-display {
+    font-size: 5rem; 
+    font-weight: 800; 
+    margin: 1rem 0; 
+    font-variant-numeric: tabular-nums;
+    text-shadow: 0px 0px 20px rgba(255,255,255,0.1);
+}
+.timer-active .time-display {
+    text-shadow: 0px 0px 30px var(--neon-green); 
+    animation: breathe 3s infinite ease-in-out;
+}
+@keyframes breathe {
+    0%, 100% { text-shadow: 0px 0px 20px var(--neon-green); }
+    50% { text-shadow: 0px 0px 40px var(--neon-green); }
+}
+
+.controls { 
+    display: flex; 
+    gap: 10px; 
+    justify-content: center; 
+}
+.btn { 
+    padding: 10px 25px; 
+    border: none; 
+    border-radius: 50px; 
+    font-weight: 700; 
+    cursor: pointer; 
+    color: white; }
+.btn-primary { 
+    background: linear-gradient(90deg, var(--neon-green), #0575E6); 
+}
+.btn-secondary { 
+    background: rgba(255,255,255,0.1); 
+}
+.btn-outline { 
+    background: transparent; 
+    border: 1px solid rgba(255,255,255,0.3); 
+}
+
+.streak-badge { 
+    background: rgba(255, 165, 0, 0.2); 
+    color: orange; 
+    padding: 5px 15px; 
+    border-radius: 20px; 
+    font-weight: bold; 
+    border: 1px solid orange; 
+}
+.mode-selector-container {
+    display: flex; 
+    gap: 10px; 
+    margin-top: 20px; 
+}
+.mode-btn { 
+    background: transparent; 
+    border: 1px solid rgba(255,255,255,0.2); 
+    color: #888; 
+    padding: 5px 15px; 
+    border-radius: 15px; 
+    cursor: pointer; 
+}
+.mode-btn.active { 
+    background: rgba(255,255,255,0.1); 
+    color: white; 
+    border-color: white; 
+}
+
+/* CALENDAR STYLES */
+.calendar-header { 
+    margin-bottom: 20px; 
+}
+.calendar-grid { 
+    display: grid; 
+    grid-template-columns: repeat(7, 1fr); 
+    gap: 8px; 
+}
+.calendar-day-header { 
+    text-align: center; 
+    font-size: 0.8rem; 
+    color: #666; 
+    font-weight: bold; }
+
+.calendar-day {
+    aspect-ratio: 1;
+    background: rgba(255,255,255,0.03);
+    border-radius: 8px;
+    position: relative;
+    transition: all 0.2s;
+    overflow: hidden; /* Keeps text inside */
+}
+
+.day-date {
+    position: absolute; 
+    top: 4px; 
+    left: 6px; 
+    font-size: 0.7rem; 
+    color: rgba(255,255,255,0.2);
+}
+
+/* UPDATED: Style for the "2h 30m" text */
+.day-count {
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    height: 100%;
+    font-size: 0.8rem; /* Smaller font to fit text */
+    font-weight: 700;
+    color: white;
+    text-align: center;
+    line-height: 1.1;
+    padding: 0 2px;
+}
+
+/* Intensity Levels (Based on Time) */
+.level-1 { background: rgba(0, 242, 96, 0.2); border: 1px solid rgba(0, 242, 96, 0.3); } /* < 1 hr */
+.level-2 { background: rgba(0, 242, 96, 0.4); border: 1px solid rgba(0, 242, 96, 0.5); } /* 1-2 hrs */
+.level-3 { background: rgba(0, 242, 96, 0.7); border: 1px solid rgba(0, 242, 96, 0.8); } /* 2-4 hrs */
+.level-4 { background: rgba(0, 242, 96, 1.0); box-shadow: 0 0 10px #00f260; color: black; } /* 4+ hrs */
+
+/* Chart Enhancements */
+canvas { filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.5)); }
+
+@media (max-width: 768px) {
+    .app-container { grid-template-columns: 1fr; }
+    .time-display { font-size: 4rem; }
 }
